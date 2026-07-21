@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    /* --- Colores --- */
+    --color-bg: #0f1115;
+    /* fondo general */
+    --color-surface: #1a1d24;
+    /* "surface" = superficie elevada: tarjetas, details */
+    --color-text-primary: #e8e8e8;
+    /* texto principal */
+    --color-text-secondary: #9a9a9a;
+    /* texto secundario/atenuado */
+    --color-border: #2a2d35;
+    /* bordes sutiles */
+    --color-accent: #4f8cff;
+    /* acento por defecto */
+
+    --color-success: #22c55e;
+    --color-warning: #eab308;
+    --color-danger: #ef4444;
+
+    /* --- Fuentes --- */
+    --font-title: 'montserrat', system-ui;
+    --font-body: 'montserrat', system-ui;
+
+    /* --- Sombras --- */
+    --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.5);
+    --shadow-focus: 0 0 15px rgba(250, 204, 21, 0.3);
+
+    /* --- Colores por categoría --- */
+    --color-accent-cripto: #f5a623;
+    /* dorado/naranja */
+    --color-accent-programacion: #3b82f6;
+    /* azul */
+    --color-accent-ingles: #16a34a;
+    /* verde */
+    --color-accent-pesas: #e11d48;
+    /* rojo */
+    --color-accent-videojuegos: #a855f7;
+    /* morado */
+
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+}
+
+header h1 {
+    font-family: var(--font-title);
+    color: var(--color-accent);
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+details {
+    background-color: var(--color-surface);
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    margin-bottom: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.cat-cripto summary {
+    color: var(--color-accent-cripto);
+}
+
+.cat-programacion summary {
+    color: var(--color-accent-programacion);
+}
+
+.cat-ingles summary {
+    color: var(--color-accent-ingles);
+}
+
+.cat-pesas summary {
+    color: var(--color-accent-pesas);
+}
+
+.cat-videojuegos summary {
+    color: var(--color-accent-videojuegos);
+}
