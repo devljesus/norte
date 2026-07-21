@@ -1,0 +1,30 @@
+{
+  "id": "ingles",
+  "nombre": "Inglés",
+  "icono": "fa-solid fa-language",
+  "descripcion": "Aprende inglés leyendo noticias reales todos los días y dominando la gramática por niveles.",
+  "widgets": [],
+  "fuentes": [
+    { "nombre": "BBC World (en inglés)", "rss": "https://feeds.bbci.co.uk/news/world/rss.xml" },
+    { "nombre": "The Guardian (en inglés)", "rss": "https://www.theguardian.com/world/rss" }
+  ],
+  "conceptos": [
+    { "titulo": "Presente simple: rutinas y hechos (I work, she works)", "nivel": "básico" },
+    { "titulo": "Verbo to be y preguntas básicas", "nivel": "básico" },
+    { "titulo": "Las 100 palabras más usadas del inglés", "nivel": "básico" },
+    { "titulo": "Pasado simple y verbos irregulares comunes", "nivel": "básico" },
+    { "titulo": "Futuro: will vs going to", "nivel": "medio" },
+    { "titulo": "Presente perfecto: have you ever...?", "nivel": "medio" },
+    { "titulo": "Phrasal verbs esenciales (get up, look for, find out...)", "nivel": "medio" },
+    { "titulo": "Leer una noticia completa en inglés sin traductor", "nivel": "medio" },
+    { "titulo": "Condicionales: if I had..., I would...", "nivel": "avanzado" },
+    { "titulo": "Entender un video/podcast en inglés sin subtítulos", "nivel": "avanzado" }
+  ],
+  "metasSugeridas": [
+    "Leer 1 titular en inglés cada día por una semana",
+    "Aprender 10 palabras nuevas esta semana",
+    "Leer mi primera noticia completa en inglés",
+    "Ver un video de 5 min en inglés con subtítulos en inglés",
+    "Tener una conversación básica por chat en inglés"
+  ]
+}

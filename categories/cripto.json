@@ -1,0 +1,34 @@
+{
+  "id": "cripto",
+  "nombre": "Cripto",
+  "icono": "fa-brands fa-bitcoin",
+  "descripcion": "Mantente al día del mercado cripto y aprende a moverte en él con seguridad.",
+  "widgets": ["precios-cripto", "fear-greed"],
+  "fuentes": [
+    { "nombre": "Cointelegraph ES", "rss": "https://es.cointelegraph.com/rss" },
+    { "nombre": "CriptoNoticias", "rss": "https://www.criptonoticias.com/feed/" },
+    { "nombre": "CoinDesk", "rss": "https://www.coindesk.com/arc/outboundfeeds/rss/" },
+    { "nombre": "Decrypt", "rss": "https://decrypt.co/feed" }
+  ],
+  "conceptos": [
+    { "titulo": "Qué es una blockchain y cómo funciona", "nivel": "básico" },
+    { "titulo": "Wallets: llaves privadas, frase semilla y por qué NUNCA se comparten", "nivel": "básico" },
+    { "titulo": "Exchange vs autocustodia: dónde viven tus criptos", "nivel": "básico" },
+    { "titulo": "Bitcoin: oferta limitada y halving", "nivel": "básico" },
+    { "titulo": "Estafas comunes: phishing, rug pulls, 'regalos' de famosos", "nivel": "básico" },
+    { "titulo": "Ethereum y los smart contracts", "nivel": "medio" },
+    { "titulo": "Stablecoins: qué son y para qué sirven", "nivel": "medio" },
+    { "titulo": "DCA: comprar por promedio en vez de adivinar el momento", "nivel": "medio" },
+    { "titulo": "Índice Fear & Greed: qué mide y qué no", "nivel": "medio" },
+    { "titulo": "DeFi: préstamos y liquidez sin bancos", "nivel": "avanzado" },
+    { "titulo": "Análisis fundamental vs análisis técnico (y sus límites)", "nivel": "avanzado" },
+    { "titulo": "Impuestos y regulación cripto en tu país", "nivel": "avanzado" }
+  ],
+  "metasSugeridas": [
+    "Leer las noticias del día 5 días seguidos",
+    "Crear una wallet de práctica y respaldar la frase semilla",
+    "Dominar los 5 conceptos básicos",
+    "Explicarle a alguien qué es Bitcoin sin leer notas",
+    "Definir mi estrategia (y mi límite) antes de invertir un solo dólar"
+  ]
+}

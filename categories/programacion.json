@@ -1,0 +1,34 @@
+{
+  "id": "programacion",
+  "nombre": "Programación",
+  "icono": "fa-solid fa-code",
+  "descripcion": "De WordPress a programador completo: domina las bases y mantente al día.",
+  "widgets": [],
+  "fuentes": [
+    { "nombre": "freeCodeCamp", "rss": "https://www.freecodecamp.org/news/rss/" },
+    { "nombre": "DEV Community", "rss": "https://dev.to/feed" },
+    { "nombre": "Hacker News", "rss": "https://hnrss.org/frontpage" }
+  ],
+  "conceptos": [
+    { "titulo": "Variables, tipos de datos y operadores", "nivel": "básico" },
+    { "titulo": "Funciones: parámetros, retorno y alcance", "nivel": "básico" },
+    { "titulo": "Arrays y objetos: guardar y recorrer datos", "nivel": "básico" },
+    { "titulo": "El DOM: leer y modificar la página con JS", "nivel": "básico" },
+    { "titulo": "Eventos: reaccionar a clics, teclas y formularios", "nivel": "básico" },
+    { "titulo": "Git y GitHub: commits, ramas y push", "nivel": "básico" },
+    { "titulo": "JSON: el idioma de los datos en la web", "nivel": "medio" },
+    { "titulo": "fetch y APIs: pedir datos a otros servidores", "nivel": "medio" },
+    { "titulo": "async/await: código que espera sin congelarse", "nivel": "medio" },
+    { "titulo": "localStorage y persistencia en el navegador", "nivel": "medio" },
+    { "titulo": "Debugging: leer errores y usar la consola como un pro", "nivel": "medio" },
+    { "titulo": "Node.js: JavaScript fuera del navegador", "nivel": "avanzado" },
+    { "titulo": "Bases de datos: guardar datos de verdad", "nivel": "avanzado" }
+  ],
+  "metasSugeridas": [
+    "Programar 30 minutos diarios 5 días seguidos",
+    "Hacer mi primer commit en GitHub",
+    "Terminar la primera feature de NORTE",
+    "Leer un error completo antes de buscarlo en Google",
+    "Publicar NORTE online para que otros lo usen"
+  ]
+}
