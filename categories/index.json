@@ -1,7 +1,9 @@
 {
   "categorias": [
-    { "id": "cripto", "nombre": "Cripto", "icono": "fa-brands fa-bitcoin" },
     { "id": "programacion", "nombre": "Programación", "icono": "fa-solid fa-code" },
-    { "id": "ingles", "nombre": "Inglés", "icono": "fa-solid fa-language" }
+    { "id": "cripto", "nombre": "Cripto", "icono": "fa-brands fa-bitcoin" },
+    { "id": "ingles", "nombre": "Inglés", "icono": "fa-solid fa-language" },
+    { "id": "pesas", "nombre": "Pesas y Entrenamiento", "icono": "fa-solid fa-dumbbell" },
+    { "id": "videojuegos", "nombre": "Videojuegos", "icono": "fa-solid fa-gamepad" }
   ]
 }
