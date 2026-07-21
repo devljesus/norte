@@ -1,0 +1,36 @@
+{
+  "id": "pesas",
+  "nombre": "Pesas y Entrenamiento",
+  "icono": "fa-solid fa-dumbbell",
+  "descripcion": "Entrena con criterio: sigue fuentes basadas en evidencia y domina los fundamentos del entrenamiento de fuerza.",
+  "widgets": [],
+  "fuentes": [
+    { "nombre": "Stronger By Science", "rss": "https://www.strongerbyscience.com/feed/" },
+    { "nombre": "T-Nation", "rss": "https://www.t-nation.com/feed/" }
+  ],
+  "conceptos": [
+    { "titulo": "Entrenamiento de fuerza: conceptos básicos", "nivel": "básico" },
+    { "titulo": "Sobrecarga progresiva: la base de todo progreso", "nivel": "básico" },
+    { "titulo": "Técnica correcta en sentadilla, peso muerto y press banca", "nivel": "básico" },
+    { "titulo": "Superávit y déficit calórico: cómo suben o bajan de peso", "nivel": "básico" },
+    { "titulo": "Proteína, carbohidratos y grasas: para qué sirve cada uno", "nivel": "básico" },
+    { "titulo": "Nutrición para el entrenamiento de fuerza", "nivel": "básico" },
+    { "titulo": "Equipo de entrenamiento de fuerza", "nivel": "básico" },
+    { "titulo": "Volumen, intensidad y frecuencia de entrenamiento", "nivel": "medio" },
+    { "titulo": "Recuperación y sueño: por qué se crece descansando", "nivel": "medio" },
+    { "titulo": "Suplementos que sí funcionan (creatina, proteína, cafeína) vs marketing", "nivel": "medio" },
+    { "titulo": "Lesiones en el entrenamiento de fuerza: prevención básica", "nivel": "medio" },
+    { "titulo": "Eventos de entrenamiento de fuerza (competencias, powerlifting, strongman)", "nivel": "medio" },
+    { "titulo": "Atletas de entrenamiento de fuerza: referentes para aprender técnica", "nivel": "medio" },
+    { "titulo": "Periodización básica: organizar el entrenamiento por bloques", "nivel": "avanzado" },
+    { "titulo": "Rol real del cardio en la composición corporal", "nivel": "avanzado" }
+  ],
+  "metasSugeridas": [
+    "Entrenar 4 días esta semana sin fallar ninguno",
+    "Registrar mis levantamientos por 30 días seguidos",
+    "Aumentar mi peso en sentadilla, press o peso muerto",
+    "Dormir al menos 7 horas 5 noches seguidas",
+    "Aprender a calcular mis macros y seguirlos una semana"
+  ],
+  "_nota": "Borrador inicial — ajusta fuentes y metas a tu nivel y rutina real."
+}

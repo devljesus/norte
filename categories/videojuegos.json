@@ -1,0 +1,40 @@
+{
+  "id": "videojuegos",
+  "nombre": "Videojuegos",
+  "icono": "fa-solid fa-gamepad",
+  "descripcion": "Ocio: recomendaciones, ofertas y lo mejor calificado del momento, por plataforma.",
+  "plataformas": ["PC", "Nintendo Switch 2"],
+  "widgets": ["ofertas-por-plataforma", "mejor-calificados-por-plataforma"],
+  "fuentes": [
+    { "nombre": "IGN Latinoamérica", "rss": "https://latam.ign.com/feed.xml" },
+    { "nombre": "Eurogamer", "rss": "https://www.eurogamer.net/feed" },
+    { "nombre": "PC Gamer", "rss": "https://www.pcgamer.com/rss/" }
+  ],
+  "conceptos": [],
+  "sugerencias": {
+    "Nintendo Switch 2": [
+      "Ejemplo: un juego sugerido de este mes para Switch 2"
+    ],
+    "PC": [
+      "Ejemplo: un juego sugerido de este mes para PC"
+    ]
+  },
+  "ofertas": {
+    "Nintendo Switch 2": [
+      "Ejemplo: Juego X con 30% de descuento en la eShop"
+    ],
+    "PC": [
+      "Ejemplo: Juego Y con 50% de descuento en Steam"
+    ]
+  },
+  "mejorCalificados": {
+    "Nintendo Switch 2": [
+      "Ejemplo: Juego Z, el mejor calificado del mes en Switch 2"
+    ],
+    "PC": [
+      "Ejemplo: Juego W, el mejor calificado del mes en PC"
+    ]
+  },
+  "metasSugeridas": [],
+  "_nota": "Categoría de ocio, sin Conceptos ni Metas. 'sugerencias', 'ofertas' y 'mejorCalificados' son EJEMPLOS ilustrativos por ahora (igual que Noticias) — cuando lleguemos a la fase JS/API, se reemplazan por datos reales en vivo (precios de Steam/eShop, rankings de Metacritic), sin cambiar la estructura."
+}
