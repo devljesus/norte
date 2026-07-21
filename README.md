@@ -60,6 +60,12 @@ y abrir http://localhost:8757
 
 ## Diario de construcción
 
-- **2026-07-18** — Fundaciones: panel multi-categoría con noticias RSS, conceptos
-  con progreso, metas con checklist, y 3 categorías iniciales (cripto,
-  programación, inglés). Widgets de precios y Fear & Greed para cripto.
+- **2026-07-21** — Primer ciclo real de Git: rama `feature/contenido-secciones`,
+  commits, Pull Request y merge a `main`. Estructura HTML completa con `<details>`/
+  `<summary>` (desplegable sin JS) para las 5 categorías: Cripto, Programación,
+  Pesas y Entrenamiento (Noticias/Conceptos/Metas), Inglés (Conceptos/Metas), y
+  Videojuegos (Noticias/Sugerencias/Ofertas/Mejor calificados, separadas por
+  plataforma PC y Nintendo Switch 2 — sin Metas ni Conceptos, por ser categoría
+  de ocio). Contenido de cada categoría sincronizado entre `index.html` y sus
+  JSON en `categories/`. Pendiente: CSS (sigue sin estilos) y, más adelante,
+  la calculadora personalizada de calorías/macros para Pesas (fase JS).
