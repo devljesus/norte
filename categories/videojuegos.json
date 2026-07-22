@@ -4,6 +4,7 @@
   "icono": "fa-solid fa-gamepad",
   "descripcion": "Ocio: recomendaciones, ofertas y lo mejor calificado del momento, por plataforma.",
   "plataformas": ["PC", "Nintendo Switch 2"],
+  "mostrarNoticias": true,
   "widgets": ["ofertas-por-plataforma", "mejor-calificados-por-plataforma"],
   "fuentes": [
     { "nombre": "IGN Latinoamérica", "rss": "https://latam.ign.com/feed.xml" },

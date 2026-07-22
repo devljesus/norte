@@ -3,6 +3,7 @@
   "nombre": "Programación",
   "icono": "fa-solid fa-code",
   "descripcion": "De WordPress a programador completo: domina las bases y mantente al día.",
+  "mostrarNoticias": true,
   "widgets": [],
   "fuentes": [
     { "nombre": "freeCodeCamp", "rss": "https://www.freecodecamp.org/news/rss/" },

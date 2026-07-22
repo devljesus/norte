@@ -3,6 +3,7 @@
   "nombre": "Inglés",
   "icono": "fa-solid fa-language",
   "descripcion": "Aprende inglés leyendo noticias reales todos los días y dominando la gramática por niveles.",
+  "mostrarNoticias": false,
   "widgets": [],
   "fuentes": [
     { "nombre": "BBC World (en inglés)", "rss": "https://feeds.bbci.co.uk/news/world/rss.xml" },

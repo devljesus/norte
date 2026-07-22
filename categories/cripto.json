@@ -3,6 +3,7 @@
   "nombre": "Cripto",
   "icono": "fa-brands fa-bitcoin",
   "descripcion": "Mantente al día del mercado cripto y aprende a moverte en él con seguridad.",
+  "mostrarNoticias": true,
   "widgets": ["precios-cripto", "fear-greed"],
   "fuentes": [
     { "nombre": "Cointelegraph ES", "rss": "https://es.cointelegraph.com/rss" },

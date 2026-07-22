@@ -3,6 +3,7 @@
   "nombre": "Pesas y Entrenamiento",
   "icono": "fa-solid fa-dumbbell",
   "descripcion": "Entrena con criterio: sigue fuentes basadas en evidencia y domina los fundamentos del entrenamiento de fuerza.",
+  "mostrarNoticias": true,
   "widgets": [],
   "fuentes": [
     { "nombre": "Stronger By Science", "rss": "https://www.strongerbyscience.com/feed/" },
