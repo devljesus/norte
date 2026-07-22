@@ -4,7 +4,7 @@
   "icono": "fa-solid fa-dumbbell",
   "descripcion": "Entrena con criterio: sigue fuentes basadas en evidencia y domina los fundamentos del entrenamiento de fuerza.",
   "mostrarNoticias": true,
-  "widgets": [],
+  "widgets": ["calculadora-calorias"],
   "fuentes": [
     { "nombre": "Stronger By Science", "rss": "https://www.strongerbyscience.com/feed/" },
     { "nombre": "T-Nation", "rss": "https://www.t-nation.com/feed/" }

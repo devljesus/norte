@@ -37,5 +37,5 @@
     ]
   },
   "metasSugeridas": [],
-  "_nota": "Categoría de ocio, sin Conceptos ni Metas. 'sugerencias', 'ofertas' y 'mejorCalificados' son EJEMPLOS ilustrativos por ahora (igual que Noticias) — cuando lleguemos a la fase JS/API, se reemplazan por datos reales en vivo (precios de Steam/eShop, rankings de Metacritic), sin cambiar la estructura."
+  "_nota": "Categoría de ocio, sin Conceptos ni Metas. Ofertas-PC y Mejor calificados-PC ya son datos reales en vivo de CheapShark (con carátula). Sugerencias (ambas plataformas) y Nintendo Switch en Ofertas/Mejor calificados siguen como ejemplo estático: no existe una API gratuita confiable para eShop, y Sugerencias es contenido curado a propósito, no automatizable con una API pública."
 }

@@ -6,8 +6,8 @@
   "mostrarNoticias": true,
   "widgets": ["precios-cripto", "fear-greed"],
   "fuentes": [
-    { "nombre": "Cointelegraph ES", "rss": "https://es.cointelegraph.com/rss" },
-    { "nombre": "CriptoNoticias", "rss": "https://www.criptonoticias.com/feed/" },
+    { "nombre": "DiarioBitcoin", "rss": "https://www.diariobitcoin.com/feed/" },
+    { "nombre": "Bit2Me News", "rss": "https://blog.bit2me.com/es/feed/" },
     { "nombre": "CoinDesk", "rss": "https://www.coindesk.com/arc/outboundfeeds/rss/" },
     { "nombre": "Decrypt", "rss": "https://decrypt.co/feed" }
   ],
