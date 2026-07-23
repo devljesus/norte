@@ -121,50 +121,56 @@ function renderCategoria(cat, contenedor) {
     }
 
     if (cat.conceptos && cat.conceptos.length > 0) {
-        const seccionConceptos = crearSeccion("Conceptos que debo dominar");
-        const listaConceptos = document.createElement("ul");
-        listaConceptos.className = "lista-conceptos";
         const chipConceptos = summary.querySelector(".cat-chips .meta-progress");
 
-        cat.conceptos.forEach(function (concepto, indice) {
-            const li = document.createElement("li");
-            li.className = "concepto-item nivel-" + concepto.nivel;
+        if (cat.id === "programacion") {
+            details.appendChild(crearRoadmap(cat, chipConceptos));
+        } else {
+            const seccionConceptos = crearSeccion("Conceptos que debo dominar");
+            const listaConceptos = document.createElement("ul");
+            listaConceptos.className = "lista-conceptos";
 
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.id = "concepto-" + cat.id + "-" + (indice + 1);
+            cat.conceptos.forEach(function (concepto, indice) {
+                const li = document.createElement("li");
+                li.className = "concepto-item nivel-" + concepto.nivel;
 
-            if (localStorage.getItem(checkbox.id) === "true") {
-                checkbox.checked = true;
-                li.classList.add("aprendido");
-            }
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.id = "concepto-" + cat.id + "-" + (indice + 1);
 
-            checkbox.addEventListener("click", function () {
-                localStorage.setItem(checkbox.id, checkbox.checked);
-                li.classList.toggle("aprendido", checkbox.checked);
-                actualizarProgresoConceptos(cat, chipConceptos);
+                if (localStorage.getItem(checkbox.id) === "true") {
+                    checkbox.checked = true;
+                    li.classList.add("aprendido");
+                }
+
+                checkbox.addEventListener("click", function () {
+                    localStorage.setItem(checkbox.id, checkbox.checked);
+                    li.classList.toggle("aprendido", checkbox.checked);
+                    actualizarProgresoConceptos(cat, chipConceptos);
+                });
+
+                const textoWrap = document.createElement("span");
+                textoWrap.className = "concepto-texto-wrap";
+
+                const badge = document.createElement("span");
+                badge.className = "nivel-badge";
+                badge.textContent = concepto.nivel;
+
+                const texto = document.createElement("span");
+                texto.textContent = concepto.titulo;
+
+                textoWrap.appendChild(badge);
+                textoWrap.appendChild(texto);
+
+                li.appendChild(checkbox);
+                li.appendChild(textoWrap);
+                listaConceptos.appendChild(li);
             });
 
-            const textoWrap = document.createElement("span");
-            textoWrap.className = "concepto-texto-wrap";
+            seccionConceptos.appendChild(listaConceptos);
+            details.appendChild(seccionConceptos);
+        }
 
-            const badge = document.createElement("span");
-            badge.className = "nivel-badge";
-            badge.textContent = concepto.nivel;
-
-            const texto = document.createElement("span");
-            texto.textContent = concepto.titulo;
-
-            textoWrap.appendChild(badge);
-            textoWrap.appendChild(texto);
-
-            li.appendChild(checkbox);
-            li.appendChild(textoWrap);
-            listaConceptos.appendChild(li);
-        });
-
-        seccionConceptos.appendChild(listaConceptos);
-        details.appendChild(seccionConceptos);
         actualizarProgresoConceptos(cat, chipConceptos);
     }
 
@@ -308,6 +314,130 @@ function actualizarProgresoConceptos(cat, chip) {
     });
 
     chip.textContent = aprendidos + "/" + cat.conceptos.length + " aprendidos";
+}
+
+/* ===== Roadmap de aprendizaje (Programación) ===== */
+
+const ORDEN_NIVELES_ROADMAP = ["básico", "medio", "avanzado"];
+const ETIQUETA_NIVEL_ROADMAP = { "básico": "Básico", "medio": "Medio", "avanzado": "Avanzado" };
+
+function crearRoadmap(cat, chipProgreso) {
+    const seccion = document.createElement("section");
+    seccion.className = "roadmap-seccion";
+
+    const h2 = document.createElement("h2");
+    const icono = document.createElement("i");
+    icono.className = "fa-solid fa-route";
+    h2.appendChild(icono);
+    const tituloTexto = document.createElement("span");
+    tituloTexto.textContent = "Tu ruta de aprendizaje";
+    h2.appendChild(tituloTexto);
+    seccion.appendChild(h2);
+
+    const roadmap = document.createElement("div");
+    roadmap.className = "roadmap";
+    seccion.appendChild(roadmap);
+
+    function repintar() {
+        renderizarRoadmapInterior(cat, roadmap, chipProgreso, repintar);
+    }
+
+    repintar();
+    return seccion;
+}
+
+function renderizarRoadmapInterior(cat, roadmap, chipProgreso, repintar) {
+    roadmap.innerHTML = "";
+
+    let indiceActual = -1;
+    cat.conceptos.forEach(function (concepto, indice) {
+        if (indiceActual === -1 && localStorage.getItem("concepto-" + cat.id + "-" + (indice + 1)) !== "true") {
+            indiceActual = indice;
+        }
+    });
+
+    ORDEN_NIVELES_ROADMAP.forEach(function (nivel) {
+        const conceptosDelNivel = [];
+        cat.conceptos.forEach(function (concepto, indice) {
+            if (concepto.nivel === nivel) {
+                conceptosDelNivel.push({ concepto: concepto, indiceOriginal: indice });
+            }
+        });
+
+        if (conceptosDelNivel.length === 0) return;
+
+        const etapa = document.createElement("div");
+        etapa.className = "roadmap-etapa";
+
+        const etapaTitulo = document.createElement("h3");
+        etapaTitulo.className = "roadmap-etapa-titulo nivel-" + nivel;
+        etapaTitulo.textContent = ETIQUETA_NIVEL_ROADMAP[nivel];
+        etapa.appendChild(etapaTitulo);
+
+        const linea = document.createElement("div");
+        linea.className = "roadmap-linea";
+
+        conceptosDelNivel.forEach(function (entrada) {
+            const idCheckbox = "concepto-" + cat.id + "-" + (entrada.indiceOriginal + 1);
+            const aprendido = localStorage.getItem(idCheckbox) === "true";
+            const esActual = entrada.indiceOriginal === indiceActual;
+
+            const nodo = document.createElement("div");
+            nodo.className = "roadmap-nodo" + (aprendido ? " aprendido" : "") + (esActual ? " actual" : "");
+
+            const puntoCol = document.createElement("div");
+            puntoCol.className = "roadmap-punto-col";
+
+            const punto = document.createElement("button");
+            punto.type = "button";
+            punto.className = "roadmap-punto";
+            punto.setAttribute("aria-label", entrada.concepto.titulo);
+
+            if (aprendido) {
+                const check = document.createElement("i");
+                check.className = "fa-solid fa-check";
+                punto.appendChild(check);
+            } else if (esActual) {
+                const flecha = document.createElement("i");
+                flecha.className = "fa-solid fa-play";
+                punto.appendChild(flecha);
+            }
+
+            punto.addEventListener("click", function () {
+                localStorage.setItem(idCheckbox, (!aprendido).toString());
+                actualizarProgresoConceptos(cat, chipProgreso);
+                repintar();
+            });
+
+            const conector = document.createElement("span");
+            conector.className = "roadmap-conector";
+
+            puntoCol.appendChild(punto);
+            puntoCol.appendChild(conector);
+
+            const textoWrap = document.createElement("span");
+            textoWrap.className = "roadmap-texto-wrap";
+
+            const texto = document.createElement("span");
+            texto.className = "roadmap-texto";
+            texto.textContent = entrada.concepto.titulo;
+            textoWrap.appendChild(texto);
+
+            if (esActual) {
+                const etiquetaActual = document.createElement("span");
+                etiquetaActual.className = "roadmap-actual-etiqueta";
+                etiquetaActual.textContent = "Siguiente";
+                textoWrap.appendChild(etiquetaActual);
+            }
+
+            nodo.appendChild(puntoCol);
+            nodo.appendChild(textoWrap);
+            linea.appendChild(nodo);
+        });
+
+        etapa.appendChild(linea);
+        roadmap.appendChild(etapa);
+    });
 }
 
 async function cargarNoticias(cat, listaNoticias) {

@@ -819,6 +819,157 @@ button:focus-visible {
     color: var(--color-danger);
 }
 
+/* ===== Roadmap de aprendizaje (Programación) ===== */
+
+.roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.roadmap-etapa-titulo {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 800;
+    margin-bottom: .7rem;
+    display: inline-block;
+    padding: .2rem .65rem;
+    border-radius: var(--radius-pill);
+}
+
+.roadmap-etapa-titulo.nivel-básico {
+    color: var(--color-success);
+    background-color: color-mix(in srgb, var(--color-success) 15%, transparent);
+}
+
+.roadmap-etapa-titulo.nivel-medio {
+    color: var(--color-warning);
+    background-color: color-mix(in srgb, var(--color-warning) 15%, transparent);
+}
+
+.roadmap-etapa-titulo.nivel-avanzado {
+    color: var(--color-danger);
+    background-color: color-mix(in srgb, var(--color-danger) 15%, transparent);
+}
+
+.roadmap-linea {
+    display: flex;
+    flex-direction: column;
+}
+
+.roadmap-nodo {
+    display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+}
+
+.roadmap-punto-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.roadmap-punto {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--color-surface-raised);
+    border: 2px solid var(--color-border);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    flex-shrink: 0;
+    transition: border-color .15s ease, background-color .15s ease, transform .12s ease;
+}
+
+.roadmap-punto:hover {
+    transform: scale(1.08);
+    border-color: var(--tint, var(--color-accent));
+}
+
+.roadmap-conector {
+    width: 2px;
+    flex: 1;
+    min-height: 1.6rem;
+    background-color: var(--color-border);
+    margin: .15rem 0;
+}
+
+.roadmap-nodo:last-child .roadmap-conector {
+    display: none;
+}
+
+.roadmap-nodo.aprendido .roadmap-punto {
+    background-color: var(--tint, var(--color-accent));
+    border-color: var(--tint, var(--color-accent));
+    color: var(--color-bg);
+}
+
+.roadmap-nodo.aprendido .roadmap-conector {
+    background-color: var(--tint, var(--color-accent));
+}
+
+.roadmap-nodo.actual .roadmap-punto {
+    border-color: var(--tint, var(--color-accent));
+    color: var(--tint, var(--color-accent));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--tint, var(--color-accent)) 20%, transparent);
+    animation: roadmap-pulso 2s ease-in-out infinite;
+}
+
+@keyframes roadmap-pulso {
+    0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--tint, var(--color-accent)) 20%, transparent); }
+    50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--tint, var(--color-accent)) 12%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .roadmap-nodo.actual .roadmap-punto {
+        animation: none;
+    }
+}
+
+.roadmap-texto-wrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding-bottom: 1.6rem;
+    padding-top: .15rem;
+}
+
+.roadmap-nodo:last-child .roadmap-texto-wrap {
+    padding-bottom: 0;
+}
+
+.roadmap-texto {
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+.roadmap-nodo.aprendido .roadmap-texto {
+    color: var(--color-text-secondary);
+    text-decoration: line-through;
+}
+
+.roadmap-nodo.actual .roadmap-texto {
+    font-weight: 700;
+}
+
+.roadmap-actual-etiqueta {
+    font-size: .62rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 800;
+    color: var(--color-bg);
+    background-color: var(--tint, var(--color-accent));
+    padding: .12rem .5rem;
+    border-radius: var(--radius-pill);
+}
+
 /* ===== Responsive ===== */
 
 @media (min-width: 720px) {
