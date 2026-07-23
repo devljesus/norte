@@ -75,6 +75,12 @@ summary {
     font-size: 1.2rem;
 }
 
+.cat-cripto { --tint: var(--color-accent-cripto); }
+.cat-programacion { --tint: var(--color-accent-programacion); }
+.cat-ingles { --tint: var(--color-accent-ingles); }
+.cat-pesas { --tint: var(--color-accent-pesas); }
+.cat-videojuegos { --tint: var(--color-accent-videojuegos); }
+
 .cat-cripto summary {
     color: var(--color-accent-cripto);
 }
@@ -93,6 +99,24 @@ summary {
 
 .cat-videojuegos summary {
     color: var(--color-accent-videojuegos);
+}
+
+.cat-encabezado {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+
+.cat-icono {
+    font-size: 1.05rem;
+    width: 1.3em;
+    text-align: center;
+}
+
+.cat-chips {
+    display: flex;
+    gap: .6rem;
+    align-items: center;
 }
 
 .tagline {
@@ -457,4 +481,144 @@ details li {
 .tarjeta-juego-detalle {
     font-size: .8rem;
     color: var(--color-accent-videojuegos);
+}
+
+/* ===== Conceptos marcables (estudio activo) ===== */
+
+.lista-conceptos {
+    list-style: none;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.concepto-item {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--tint, var(--color-accent));
+    border-radius: 4px;
+    padding: .55rem .75rem;
+    transition: opacity .15s ease;
+}
+
+.concepto-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: .2rem;
+    accent-color: var(--tint, var(--color-accent));
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.concepto-item.aprendido {
+    opacity: .55;
+}
+
+.concepto-item.aprendido .concepto-texto-wrap span:last-child {
+    text-decoration: line-through;
+}
+
+.concepto-texto-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.nivel-badge {
+    align-self: flex-start;
+    font-size: .65rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: .1rem .45rem;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.nivel-básico .nivel-badge {
+    background-color: color-mix(in srgb, var(--color-success) 20%, transparent);
+    color: var(--color-success);
+}
+
+.nivel-medio .nivel-badge {
+    background-color: color-mix(in srgb, var(--color-warning) 20%, transparent);
+    color: var(--color-warning);
+}
+
+.nivel-avanzado .nivel-badge {
+    background-color: color-mix(in srgb, var(--color-danger) 20%, transparent);
+    color: var(--color-danger);
+}
+
+/* ===== Seguimiento de precios (Cripto) ===== */
+
+.seguimiento-precios {
+    margin-top: 1rem;
+}
+
+.precios-lista {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
+.precio-fila {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: .5rem .75rem;
+}
+
+.precio-nombre {
+    flex: 1;
+    font-weight: bold;
+    font-size: .9rem;
+}
+
+.precio-valor {
+    font-variant-numeric: tabular-nums;
+    font-size: .9rem;
+}
+
+.precio-cambio {
+    font-size: .8rem;
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+    min-width: 3.5em;
+    text-align: right;
+}
+
+.precio-cambio.positivo {
+    color: var(--color-success);
+}
+
+.precio-cambio.negativo {
+    color: var(--color-danger);
+}
+
+/* ===== Noticias: un poco más de vida ===== */
+
+details section ul:not(.lista-metas):not(.lista-conceptos):not(.lista-juegos) li {
+    padding: .3rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+}
+
+details section ul:not(.lista-metas):not(.lista-conceptos):not(.lista-juegos) li:last-child {
+    border-bottom: none;
+}
+
+details section ul a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+}
+
+details section ul a:hover {
+    color: var(--tint, var(--color-accent));
+    text-decoration: underline;
 }

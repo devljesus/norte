@@ -43,17 +43,39 @@ function renderCategoria(cat, contenedor) {
     details.className = "cat-" + cat.id;
 
     const summary = document.createElement("summary");
+
+    const encabezado = document.createElement("span");
+    encabezado.className = "cat-encabezado";
+
+    if (cat.icono) {
+        const icono = document.createElement("i");
+        icono.className = cat.icono + " cat-icono";
+        encabezado.appendChild(icono);
+    }
+
     const nombre = document.createElement("span");
     nombre.textContent = cat.nombre;
-    summary.appendChild(nombre);
+    encabezado.appendChild(nombre);
+    summary.appendChild(encabezado);
+
+    const chips = document.createElement("span");
+    chips.className = "cat-chips";
+
+    if (cat.conceptos && cat.conceptos.length > 0) {
+        const chipConceptos = document.createElement("span");
+        chipConceptos.className = "meta-progress";
+        chipConceptos.id = "progreso-conceptos-" + cat.id;
+        chips.appendChild(chipConceptos);
+    }
 
     if (cat.metasSugeridas && cat.metasSugeridas.length > 0) {
         const chip = document.createElement("span");
         chip.className = "meta-progress";
         chip.id = "progreso-" + cat.id;
-        summary.appendChild(chip);
+        chips.appendChild(chip);
     }
 
+    summary.appendChild(chips);
     details.appendChild(summary);
 
     if (cat.plataformas && cat.plataformas.length > 0) {
@@ -83,12 +105,15 @@ function renderCategoria(cat, contenedor) {
         seccionNoticias.appendChild(listaNoticias);
 
         if (cat.id === "cripto") {
-            const recargarNoticiasCripto = function () {
+            const seguimiento = crearSeguimientoPrecios();
+            const recargarTodo = function () {
                 cargarNoticiasCripto(cat, listaNoticias);
+                cargarPreciosSeguidos(seguimiento.lista);
             };
-            details.appendChild(crearSelectorMonedas(recargarNoticiasCripto));
+            details.appendChild(crearSelectorMonedas(recargarTodo));
+            details.appendChild(seguimiento.contenedor);
             details.appendChild(seccionNoticias);
-            recargarNoticiasCripto();
+            recargarTodo();
         } else {
             details.appendChild(seccionNoticias);
             cargarNoticias(cat, listaNoticias);
@@ -96,22 +121,58 @@ function renderCategoria(cat, contenedor) {
     }
 
     if (cat.conceptos && cat.conceptos.length > 0) {
-        const seccionConceptos = crearSeccion("Conceptos (" + cat.conceptos.length + ")");
+        const seccionConceptos = crearSeccion("Conceptos que debo dominar");
         const listaConceptos = document.createElement("ul");
-        cat.conceptos.forEach(function (concepto) {
+        listaConceptos.className = "lista-conceptos";
+        const chipConceptos = summary.querySelector(".cat-chips .meta-progress");
+
+        cat.conceptos.forEach(function (concepto, indice) {
             const li = document.createElement("li");
-            li.textContent = concepto.titulo;
+            li.className = "concepto-item nivel-" + concepto.nivel;
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = "concepto-" + cat.id + "-" + (indice + 1);
+
+            if (localStorage.getItem(checkbox.id) === "true") {
+                checkbox.checked = true;
+                li.classList.add("aprendido");
+            }
+
+            checkbox.addEventListener("click", function () {
+                localStorage.setItem(checkbox.id, checkbox.checked);
+                li.classList.toggle("aprendido", checkbox.checked);
+                actualizarProgresoConceptos(cat, chipConceptos);
+            });
+
+            const textoWrap = document.createElement("span");
+            textoWrap.className = "concepto-texto-wrap";
+
+            const badge = document.createElement("span");
+            badge.className = "nivel-badge";
+            badge.textContent = concepto.nivel;
+
+            const texto = document.createElement("span");
+            texto.textContent = concepto.titulo;
+
+            textoWrap.appendChild(badge);
+            textoWrap.appendChild(texto);
+
+            li.appendChild(checkbox);
+            li.appendChild(textoWrap);
             listaConceptos.appendChild(li);
         });
+
         seccionConceptos.appendChild(listaConceptos);
         details.appendChild(seccionConceptos);
+        actualizarProgresoConceptos(cat, chipConceptos);
     }
 
     if (cat.metasSugeridas && cat.metasSugeridas.length > 0) {
         const seccionMetas = crearSeccion("Metas");
         const listaMetas = document.createElement("ul");
         listaMetas.className = "lista-metas";
-        const chipProgreso = summary.querySelector(".meta-progress");
+        const chipProgreso = summary.querySelector("#progreso-" + cat.id);
 
         cat.metasSugeridas.forEach(function (metaTexto, indice) {
             const li = document.createElement("li");
@@ -145,7 +206,11 @@ function renderCategoria(cat, contenedor) {
     }
 
     if (cat.sugerencias) {
-        details.appendChild(crearBloquePlataformas("Sugerencias de este mes", cat.sugerencias));
+        const seccionSugerencias = crearBloquePlataformas("Sugerencias de este mes", cat.sugerencias);
+        details.appendChild(seccionSugerencias);
+        if (cat.id === "videojuegos") {
+            cargarSugerenciasPC(seccionSugerencias);
+        }
     }
 
     if (cat.ofertas) {
@@ -209,6 +274,19 @@ function actualizarProgresoMetas(cat, chip) {
     chip.textContent = hechas + "/" + cat.metasSugeridas.length;
 }
 
+function actualizarProgresoConceptos(cat, chip) {
+    if (!chip) return;
+
+    let aprendidos = 0;
+    cat.conceptos.forEach(function (concepto, indice) {
+        if (localStorage.getItem("concepto-" + cat.id + "-" + (indice + 1)) === "true") {
+            aprendidos++;
+        }
+    });
+
+    chip.textContent = aprendidos + "/" + cat.conceptos.length + " aprendidos";
+}
+
 async function cargarNoticias(cat, listaNoticias) {
     if (!cat.fuentes || cat.fuentes.length === 0) {
         listaNoticias.innerHTML = "";
@@ -258,16 +336,122 @@ function crearWidgetsCripto() {
     const contenedor = document.createElement("div");
     contenedor.className = "widgets";
 
-    const widgetMiedo = crearWidget("Fear & Greed");
-    const widgetPrecio = crearWidget("Bitcoin (USD)");
-
+    const widgetMiedo = crearWidget("Fear & Greed (mercado)");
     contenedor.appendChild(widgetMiedo.widget);
-    contenedor.appendChild(widgetPrecio.widget);
-
     cargarFearGreed(widgetMiedo.valor);
-    cargarPrecioBTC(widgetPrecio.valor);
 
     return contenedor;
+}
+
+const COINGECKO_IDS = {
+    "bitcoin": "bitcoin",
+    "ethereum": "ethereum",
+    "solana": "solana",
+    "xrp": "ripple",
+    "dogecoin": "dogecoin",
+    "cardano": "cardano",
+    "polkadot": "polkadot",
+    "litecoin": "litecoin",
+    "chainlink": "chainlink",
+    "avalanche": "avalanche-2",
+    "polygon": "matic-network",
+    "shiba inu": "shiba-inu",
+    "bnb": "binancecoin",
+    "tron": "tron",
+    "stellar": "stellar",
+    "toncoin": "the-open-network",
+    "sui": "sui"
+};
+
+function obtenerIdCoinGecko(nombreMoneda) {
+    const clave = nombreMoneda.trim().toLowerCase();
+    if (COINGECKO_IDS[clave]) return COINGECKO_IDS[clave];
+    return clave.replace(/\s+/g, "-");
+}
+
+function crearSeguimientoPrecios() {
+    const contenedor = document.createElement("div");
+    contenedor.className = "seguimiento-precios";
+
+    const titulo = document.createElement("p");
+    titulo.className = "selector-monedas-titulo";
+    titulo.textContent = "Precios de tus monedas:";
+    contenedor.appendChild(titulo);
+
+    const lista = document.createElement("div");
+    lista.className = "precios-lista";
+    contenedor.appendChild(lista);
+
+    return { contenedor: contenedor, lista: lista };
+}
+
+async function cargarPreciosSeguidos(lista) {
+    const monedas = obtenerMonedasSeguidas();
+
+    if (monedas.length === 0) {
+        lista.innerHTML = "";
+        const vacio = document.createElement("p");
+        vacio.className = "loading";
+        vacio.textContent = "No sigues ninguna moneda todavía.";
+        lista.appendChild(vacio);
+        return;
+    }
+
+    lista.innerHTML = "";
+    const cargando = document.createElement("p");
+    cargando.className = "loading";
+    cargando.textContent = "Cargando precios...";
+    lista.appendChild(cargando);
+
+    const ids = monedas.map(obtenerIdCoinGecko).join(",");
+    const url = "https://api.coingecko.com/api/v3/simple/price?ids=" + encodeURIComponent(ids) + "&vs_currencies=usd&include_24hr_change=true";
+
+    try {
+        const respuesta = await fetchConTiempoLimite(url);
+        const datos = await respuesta.json();
+
+        lista.innerHTML = "";
+        monedas.forEach(function (moneda) {
+            const info = datos[obtenerIdCoinGecko(moneda)];
+
+            const fila = document.createElement("div");
+            fila.className = "precio-fila";
+
+            const nombre = document.createElement("span");
+            nombre.className = "precio-nombre";
+            nombre.textContent = moneda;
+            fila.appendChild(nombre);
+
+            if (info && typeof info.usd === "number") {
+                const precio = document.createElement("span");
+                precio.className = "precio-valor";
+                const decimales = info.usd < 1 ? 4 : 2;
+                precio.textContent = "$" + info.usd.toLocaleString("en-US", { maximumFractionDigits: decimales });
+                fila.appendChild(precio);
+
+                if (typeof info.usd_24h_change === "number") {
+                    const cambioEl = document.createElement("span");
+                    const cambio = info.usd_24h_change;
+                    cambioEl.className = "precio-cambio " + (cambio >= 0 ? "positivo" : "negativo");
+                    cambioEl.textContent = (cambio >= 0 ? "+" : "") + cambio.toFixed(1) + "%";
+                    fila.appendChild(cambioEl);
+                }
+            } else {
+                const noDisponible = document.createElement("span");
+                noDisponible.className = "precio-valor loading";
+                noDisponible.textContent = "no encontrada";
+                fila.appendChild(noDisponible);
+            }
+
+            lista.appendChild(fila);
+        });
+    } catch (error) {
+        lista.innerHTML = "";
+        const errorEl = document.createElement("p");
+        errorEl.className = "error";
+        errorEl.textContent = "No se pudieron cargar los precios ahora mismo.";
+        lista.appendChild(errorEl);
+    }
 }
 
 function crearWidget(etiquetaTexto) {
@@ -298,16 +482,6 @@ async function cargarFearGreed(elemento) {
     }
 }
 
-async function cargarPrecioBTC(elemento) {
-    try {
-        const respuesta = await fetchConTiempoLimite("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");
-        const datos = await respuesta.json();
-        elemento.textContent = "$" + datos.bitcoin.usd.toLocaleString("en-US");
-    } catch (error) {
-        elemento.textContent = "No disponible";
-    }
-}
-
 async function cargarOfertasPC(seccionOfertas) {
     const listaPC = seccionOfertas.querySelector('ul[data-plataforma="PC"]');
     if (!listaPC) return;
@@ -331,6 +505,32 @@ async function cargarOfertasPC(seccionOfertas) {
         const li = document.createElement("li");
         li.className = "error";
         li.textContent = "No se pudieron cargar las ofertas de Steam ahora mismo.";
+        listaPC.appendChild(li);
+    }
+}
+
+async function cargarSugerenciasPC(seccionSugerencias) {
+    const listaPC = seccionSugerencias.querySelector('ul[data-plataforma="PC"]');
+    if (!listaPC) return;
+
+    try {
+        const respuesta = await fetchConTiempoLimite("https://www.cheapshark.com/api/1.0/deals?storeID=1&pageSize=3&sortBy=Deal Rating");
+        const juegos = await respuesta.json();
+
+        if (!Array.isArray(juegos) || juegos.length === 0) {
+            throw new Error("respuesta sin sugerencias");
+        }
+
+        listaPC.innerHTML = "";
+        listaPC.classList.add("lista-juegos");
+        juegos.forEach(function (juego) {
+            listaPC.appendChild(crearTarjetaJuego(juego.title, juego.thumb, "Recomendado — " + juego.steamRatingPercent + "% en Steam"));
+        });
+    } catch (error) {
+        listaPC.innerHTML = "";
+        const li = document.createElement("li");
+        li.className = "error";
+        li.textContent = "No se pudieron cargar sugerencias ahora mismo.";
         listaPC.appendChild(li);
     }
 }

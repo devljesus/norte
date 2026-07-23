@@ -14,28 +14,28 @@
   "conceptos": [],
   "sugerencias": {
     "Nintendo Switch 2": [
-      "Ejemplo: un juego sugerido de este mes para Switch 2"
+      "Nintendo eShop no tiene API pública — pendiente"
     ],
     "PC": [
-      "Ejemplo: un juego sugerido de este mes para PC"
+      "Cargando..."
     ]
   },
   "ofertas": {
     "Nintendo Switch 2": [
-      "Ejemplo: Juego X con 30% de descuento en la eShop"
+      "Nintendo eShop no tiene API pública — pendiente"
     ],
     "PC": [
-      "Ejemplo: Juego Y con 50% de descuento en Steam"
+      "Cargando..."
     ]
   },
   "mejorCalificados": {
     "Nintendo Switch 2": [
-      "Ejemplo: Juego Z, el mejor calificado del mes en Switch 2"
+      "Nintendo eShop no tiene API pública — pendiente"
     ],
     "PC": [
-      "Ejemplo: Juego W, el mejor calificado del mes en PC"
+      "Cargando..."
     ]
   },
   "metasSugeridas": [],
-  "_nota": "Categoría de ocio, sin Conceptos ni Metas. Ofertas-PC y Mejor calificados-PC ya son datos reales en vivo de CheapShark (con carátula). Sugerencias (ambas plataformas) y Nintendo Switch en Ofertas/Mejor calificados siguen como ejemplo estático: no existe una API gratuita confiable para eShop, y Sugerencias es contenido curado a propósito, no automatizable con una API pública."
+  "_nota": "Categoría de ocio, sin Conceptos ni Metas. Todo el lado PC (Sugerencias, Ofertas, Mejor calificados) es en vivo vía CheapShark, con carátula. Nintendo Switch queda honestamente marcado como pendiente: no existe una API gratuita de eShop. Si en el futuro se paga por una API de terceros, aquí se conecta."
 }
