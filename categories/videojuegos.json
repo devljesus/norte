@@ -8,13 +8,14 @@
   "widgets": ["ofertas-por-plataforma", "mejor-calificados-por-plataforma"],
   "fuentes": [
     { "nombre": "IGN Latinoamérica", "rss": "https://latam.ign.com/feed.xml" },
+    { "nombre": "Vandal", "rss": "https://vandal.elespanol.com/rss/" },
     { "nombre": "Eurogamer", "rss": "https://www.eurogamer.net/feed" },
     { "nombre": "PC Gamer", "rss": "https://www.pcgamer.com/rss/" }
   ],
   "conceptos": [],
   "sugerencias": {
     "Nintendo Switch 2": [
-      "Nintendo eShop no tiene API pública — pendiente"
+      "Cargando..."
     ],
     "PC": [
       "Cargando..."
@@ -22,7 +23,7 @@
   },
   "ofertas": {
     "Nintendo Switch 2": [
-      "Nintendo eShop no tiene API pública — pendiente"
+      "Cargando..."
     ],
     "PC": [
       "Cargando..."
@@ -30,12 +31,12 @@
   },
   "mejorCalificados": {
     "Nintendo Switch 2": [
-      "Nintendo eShop no tiene API pública — pendiente"
+      "Cargando..."
     ],
     "PC": [
       "Cargando..."
     ]
   },
   "metasSugeridas": [],
-  "_nota": "Categoría de ocio, sin Conceptos ni Metas. Todo el lado PC (Sugerencias, Ofertas, Mejor calificados) es en vivo vía CheapShark, con carátula. Nintendo Switch queda honestamente marcado como pendiente: no existe una API gratuita de eShop. Si en el futuro se paga por una API de terceros, aquí se conecta."
+  "_nota": "Categoría de ocio, sin Conceptos ni Metas. PC: en vivo vía CheapShark. Nintendo Switch 2: en vivo vía el buscador propio de Nintendo Europe (searching.nintendo-europe.com), accedido a través de un proxy CORS público (allorigins.win) porque ese endpoint no permite llamadas directas desde el navegador. No expone rating de crítica, así que 'Mejor calificados' en Switch usa popularidad de búsqueda (hits_i) como proxy honesto, no un puntaje inventado."
 }

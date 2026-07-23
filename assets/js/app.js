@@ -210,6 +210,7 @@ function renderCategoria(cat, contenedor) {
         details.appendChild(seccionSugerencias);
         if (cat.id === "videojuegos") {
             cargarSugerenciasPC(seccionSugerencias);
+            cargarSugerenciasNintendo(seccionSugerencias);
         }
     }
 
@@ -218,6 +219,7 @@ function renderCategoria(cat, contenedor) {
         details.appendChild(seccionOfertas);
         if (cat.id === "videojuegos") {
             cargarOfertasPC(seccionOfertas);
+            cargarOfertasNintendo(seccionOfertas);
         }
     }
 
@@ -226,16 +228,37 @@ function renderCategoria(cat, contenedor) {
         details.appendChild(seccionMejorCalificados);
         if (cat.id === "videojuegos") {
             cargarMejorCalificadosPC(seccionMejorCalificados);
+            cargarMasPopularesNintendo(seccionMejorCalificados);
         }
     }
 
     contenedor.appendChild(details);
 }
 
+const ICONOS_SECCION = {
+    "Noticias": "fa-solid fa-newspaper",
+    "Conceptos que debo dominar": "fa-solid fa-book-open",
+    "Metas": "fa-solid fa-bullseye",
+    "Sugerencias de este mes": "fa-solid fa-star",
+    "Mejores ofertas": "fa-solid fa-tag",
+    "Mejor calificados": "fa-solid fa-trophy"
+};
+
 function crearSeccion(tituloTexto) {
     const seccion = document.createElement("section");
     const h2 = document.createElement("h2");
-    h2.textContent = tituloTexto;
+
+    const iconoClase = ICONOS_SECCION[tituloTexto];
+    if (iconoClase) {
+        const icono = document.createElement("i");
+        icono.className = iconoClase;
+        h2.appendChild(icono);
+    }
+
+    const texto = document.createElement("span");
+    texto.textContent = tituloTexto;
+    h2.appendChild(texto);
+
     seccion.appendChild(h2);
     return seccion;
 }
@@ -509,6 +532,121 @@ async function cargarOfertasPC(seccionOfertas) {
     }
 }
 
+/* ===== Nintendo Switch 2: buscador propio de Nintendo Europe vía proxy CORS ===== */
+
+const NINTENDO_SEARCH_BASE = "https://searching.nintendo-europe.com/es/select";
+const CORS_PROXIES = [
+    function (objetivo) { return "https://corsproxy.io/?url=" + encodeURIComponent(objetivo); },
+    function (objetivo) { return "https://api.allorigins.win/raw?url=" + encodeURIComponent(objetivo); }
+];
+
+async function buscarNintendo(parametros) {
+    const query = new URLSearchParams(parametros).toString();
+    const objetivo = NINTENDO_SEARCH_BASE + "?" + query;
+
+    for (const construirUrl of CORS_PROXIES) {
+        try {
+            const respuesta = await fetchConTiempoLimite(construirUrl(objetivo), 9000);
+            const datos = await respuesta.json();
+            if (datos && datos.response && datos.response.docs) {
+                return datos.response.docs;
+            }
+        } catch (error) {
+            continue;
+        }
+    }
+
+    throw new Error("Ningún proxy CORS respondió para Nintendo");
+}
+
+async function cargarOfertasNintendo(seccionOfertas) {
+    const lista = seccionOfertas.querySelector('ul[data-plataforma="Nintendo Switch 2"]');
+    if (!lista) return;
+
+    try {
+        const juegos = await buscarNintendo({
+            q: "*",
+            fq: "type:GAME AND price_has_discount_b:true AND system_type:nintendoswitch2*",
+            sort: "price_discount_percentage_f desc",
+            rows: "4",
+            wt: "json"
+        });
+
+        if (!juegos || juegos.length === 0) throw new Error("sin ofertas");
+
+        lista.innerHTML = "";
+        lista.classList.add("lista-juegos");
+        juegos.forEach(function (juego) {
+            const detalle = Math.round(juego.price_discount_percentage_f) + "% — " + juego.price_discounted_f + "€";
+            lista.appendChild(crearTarjetaJuego(juego.title, juego.image_url_sq_s, detalle));
+        });
+    } catch (error) {
+        lista.innerHTML = "";
+        const li = document.createElement("li");
+        li.className = "error";
+        li.textContent = "No se pudieron cargar las ofertas de Nintendo ahora mismo.";
+        lista.appendChild(li);
+    }
+}
+
+async function cargarSugerenciasNintendo(seccionSugerencias) {
+    const lista = seccionSugerencias.querySelector('ul[data-plataforma="Nintendo Switch 2"]');
+    if (!lista) return;
+
+    try {
+        const juegos = await buscarNintendo({
+            q: "*",
+            fq: "type:GAME AND system_type:nintendoswitch2*",
+            sort: "date_from desc",
+            rows: "3",
+            wt: "json"
+        });
+
+        if (!juegos || juegos.length === 0) throw new Error("sin sugerencias");
+
+        lista.innerHTML = "";
+        lista.classList.add("lista-juegos");
+        juegos.forEach(function (juego) {
+            lista.appendChild(crearTarjetaJuego(juego.title, juego.image_url_sq_s, "Recién anunciado/lanzado"));
+        });
+    } catch (error) {
+        lista.innerHTML = "";
+        const li = document.createElement("li");
+        li.className = "error";
+        li.textContent = "No se pudieron cargar sugerencias ahora mismo.";
+        lista.appendChild(li);
+    }
+}
+
+async function cargarMasPopularesNintendo(seccionMejorCalificados) {
+    const lista = seccionMejorCalificados.querySelector('ul[data-plataforma="Nintendo Switch 2"]');
+    if (!lista) return;
+
+    try {
+        const juegos = await buscarNintendo({
+            q: "*",
+            fq: "type:GAME AND system_type:nintendoswitch2*",
+            sort: "hits_i desc",
+            rows: "4",
+            wt: "json"
+        });
+
+        if (!juegos || juegos.length === 0) throw new Error("sin datos");
+
+        lista.innerHTML = "";
+        lista.classList.add("lista-juegos");
+        juegos.forEach(function (juego) {
+            lista.appendChild(crearTarjetaJuego(juego.title, juego.image_url_sq_s, "Más buscado en Switch 2 (Nintendo no publica rating)"));
+        });
+    } catch (error) {
+        lista.innerHTML = "";
+        const li = document.createElement("li");
+        li.className = "error";
+        li.textContent = "No se pudieron cargar los más populares ahora mismo.";
+        lista.appendChild(li);
+    }
+}
+
 async function cargarSugerenciasPC(seccionSugerencias) {
     const listaPC = seccionSugerencias.querySelector('ul[data-plataforma="PC"]');
     if (!listaPC) return;
@@ -698,60 +836,73 @@ async function cargarNoticiasCripto(cat, listaNoticias) {
     listaNoticias.innerHTML = "";
     const cargando = document.createElement("li");
     cargando.className = "loading";
-    cargando.textContent = "Cargando noticias...";
+    cargando.textContent = "Cargando noticias de " + cat.fuentes.length + " fuentes...";
     listaNoticias.appendChild(cargando);
 
-    for (const fuente of cat.fuentes) {
+    const resultados = await Promise.all(cat.fuentes.map(async function (fuente) {
         const url = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(fuente.rss);
-
         try {
             const respuesta = await fetchConTiempoLimite(url);
             const datos = await respuesta.json();
-
-            if (datos.status !== "ok" || !datos.items || datos.items.length === 0) {
-                throw new Error("respuesta sin noticias utilizables");
-            }
-
-            const coincidencias = monedas.length === 0 ? [] : datos.items.filter(function (item) {
-                const texto = item.title.toLowerCase();
-                return monedas.some(function (moneda) {
-                    return texto.indexOf(moneda.toLowerCase()) !== -1;
-                });
+            if (datos.status !== "ok" || !datos.items) return [];
+            return datos.items.map(function (item) {
+                return { titulo: item.title, link: item.link, fuente: fuente.nombre, fecha: item.pubDate };
             });
-
-            const hayCoincidencias = coincidencias.length > 0;
-            const itemsAMostrar = hayCoincidencias ? coincidencias.slice(0, 6) : datos.items.slice(0, 4);
-
-            listaNoticias.innerHTML = "";
-
-            if (!hayCoincidencias) {
-                const aviso = document.createElement("li");
-                aviso.className = "loading";
-                aviso.textContent = "Sin noticias específicas de tus monedas ahora mismo — mostrando lo más reciente:";
-                listaNoticias.appendChild(aviso);
-            }
-
-            itemsAMostrar.forEach(function (item) {
-                const li = document.createElement("li");
-                const enlace = document.createElement("a");
-                enlace.href = item.link;
-                enlace.target = "_blank";
-                enlace.rel = "noopener";
-                enlace.textContent = item.title;
-                li.appendChild(enlace);
-                listaNoticias.appendChild(li);
-            });
-            return;
         } catch (error) {
-            continue;
+            return [];
         }
+    }));
+
+    const todosLosItems = resultados.flat();
+
+    if (todosLosItems.length === 0) {
+        listaNoticias.innerHTML = "";
+        const li = document.createElement("li");
+        li.className = "error";
+        li.textContent = "No se pudieron cargar las noticias de cripto ahora mismo.";
+        listaNoticias.appendChild(li);
+        return;
     }
 
+    todosLosItems.sort(function (a, b) {
+        return new Date(b.fecha) - new Date(a.fecha);
+    });
+
+    const coincidencias = monedas.length === 0 ? [] : todosLosItems.filter(function (item) {
+        const texto = item.titulo.toLowerCase();
+        return monedas.some(function (moneda) {
+            return texto.indexOf(moneda.toLowerCase()) !== -1;
+        });
+    });
+
+    const hayCoincidencias = coincidencias.length > 0;
+    const itemsAMostrar = hayCoincidencias ? coincidencias.slice(0, 10) : todosLosItems.slice(0, 6);
+
     listaNoticias.innerHTML = "";
-    const li = document.createElement("li");
-    li.className = "error";
-    li.textContent = "No se pudieron cargar las noticias de cripto ahora mismo.";
-    listaNoticias.appendChild(li);
+
+    if (!hayCoincidencias) {
+        const aviso = document.createElement("li");
+        aviso.className = "loading";
+        aviso.textContent = "Sin noticias específicas de tus monedas ahora mismo — mostrando lo más reciente:";
+        listaNoticias.appendChild(aviso);
+    }
+
+    itemsAMostrar.forEach(function (item) {
+        const li = document.createElement("li");
+        const enlace = document.createElement("a");
+        enlace.href = item.link;
+        enlace.target = "_blank";
+        enlace.rel = "noopener";
+        enlace.textContent = item.titulo;
+        li.appendChild(enlace);
+
+        const fuenteTag = document.createElement("span");
+        fuenteTag.className = "noticia-fuente";
+        fuenteTag.textContent = item.fuente;
+        li.appendChild(fuenteTag);
+
+        listaNoticias.appendChild(li);
+    });
 }
 
 /* ===== Pesas: calculadora de calorías y macros ===== */

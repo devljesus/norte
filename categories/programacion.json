@@ -6,6 +6,7 @@
   "mostrarNoticias": true,
   "widgets": [],
   "fuentes": [
+    { "nombre": "freeCodeCamp Español", "rss": "https://www.freecodecamp.org/espanol/news/rss/" },
     { "nombre": "freeCodeCamp", "rss": "https://www.freecodecamp.org/news/rss/" },
     { "nombre": "DEV Community", "rss": "https://dev.to/feed" },
     { "nombre": "Hacker News", "rss": "https://hnrss.org/frontpage" }

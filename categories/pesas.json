@@ -6,6 +6,7 @@
   "mostrarNoticias": true,
   "widgets": ["calculadora-calorias"],
   "fuentes": [
+    { "nombre": "Fitness Revolucionario", "rss": "https://www.fitnessrevolucionario.com/feed/" },
     { "nombre": "Stronger By Science", "rss": "https://www.strongerbyscience.com/feed/" },
     { "nombre": "T-Nation", "rss": "https://www.t-nation.com/feed/" }
   ],
